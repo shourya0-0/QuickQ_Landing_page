@@ -10,6 +10,31 @@ export default function HeroSection() {
       className="w-full pt-16 pb-24 bg-no-repeat bg-cover bg-center relative" 
       style={{ backgroundImage: `url(${bgImage})` }}
     >
+      {/* User/Host Option Boxes - positioned relative to section */}
+      <div className="hidden md:block">
+        {/* For Users Box (Left Side) */}
+        <div className="absolute left-0 top-1/3 w-[180px] md:w-[280px] p-6 px-8 text-center rounded-[30px] border border-dashed border-black bg-white bg-opacity-86 shadow-[0px_0px_46.4px_0px_rgba(9,16,87,0.18)]" style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
+          <div className="flex justify-center mb-4">
+            <User size={32} className="text-[#0a0a5e]" />
+          </div>
+          <h3 className="text-[#0a0a5e] font-medium font-poppins text-lg mb-2">For Users</h3>
+          <p className="text-gray-600 text-sm font-light font-poppins">
+            Let's get in a queue in a smarter way
+          </p>
+        </div>
+
+        {/* For Hosts Box (Right Side) */}
+        <div className="absolute right-0 top-1/3 w-[180px] md:w-[280px] p-6 px-8 text-center rounded-[30px] border border-dashed border-black bg-white bg-opacity-86 shadow-[0px_0px_46.4px_0px_rgba(9,16,87,0.18)]" style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}>
+          <div className="flex justify-center mb-4">
+            <Users size={32} className="text-[#0a0a5e]" />
+          </div>
+          <h3 className="text-[#0a0a5e] font-medium font-poppins text-lg mb-2">For Hosts</h3>
+          <p className="text-gray-600 text-sm font-light font-poppins">
+            Let's manage queue in a smarter way
+          </p>
+        </div>
+      </div>
+      
       <div className="container mx-auto px-4 text-center">
         {/* Small text */}
         <div className="inline-flex items-center bg-white rounded-[20px] px-1 py-1 border border-gray-300 mb-8">
@@ -29,30 +54,8 @@ export default function HeroSection() {
           World's first comprehensive queue management solution for businesses and customers
         </p>
 
-        {/* User/Host Option Boxes */}
-        <div className="hidden md:block flex justify-center items-stretch mb-12 relative">
-          {/* For Users Box (Left Side) */}
-          <div className="fixed left-0 top-1/2 w-[180px] md:w-[280px] p-6 px-8 text-center rounded-[30px] border border-dashed border-black bg-white bg-opacity-86 shadow-[0px_0px_46.4px_0px_rgba(9,16,87,0.18)]" style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
-            <div className="flex justify-center mb-4">
-              <User size={32} className="text-[#0a0a5e]" />
-            </div>
-            <h3 className="text-[#0a0a5e] font-medium font-poppins text-lg mb-2">For Users</h3>
-            <p className="text-gray-600 text-sm font-light font-poppins">
-              Let's get in a queue in a smarter way
-            </p>
-          </div>
-
-          {/* For Hosts Box (Right Side) */}
-          <div className="fixed right-0 top-1/2 w-[180px] md:w-[280px] p-6 px-8 text-center rounded-[30px] border border-dashed border-black bg-white bg-opacity-86 shadow-[0px_0px_46.4px_0px_rgba(9,16,87,0.18)]" style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}>
-            <div className="flex justify-center mb-4">
-              <Users size={32} className="text-[#0a0a5e]" />
-            </div>
-            <h3 className="text-[#0a0a5e] font-medium font-poppins text-lg mb-2">For Hosts</h3>
-            <p className="text-gray-600 text-sm font-light font-poppins">
-              Let's manage queue in a smarter way
-            </p>
-          </div>
-        </div>
+        {/* Placeholder for spacing where the boxes used to be */}
+        <div className="hidden md:block mb-12"></div>
 
         {/* CTA Button */}
         <Link

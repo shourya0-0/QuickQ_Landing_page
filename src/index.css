@@ -1,3 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poltawski+Nowy:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Add smooth scrolling to the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global transition for interactive elements */
+a, button {
+  @apply transition-all duration-300;
+}
+
+/* Active link styles */
+.active-nav-link {
+  @apply relative;
+}
+
+.active-nav-link::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-full h-0.5 bg-[#F97316] rounded-full transform scale-x-0 transition-transform duration-300 origin-bottom;
+}
+
+.active-nav-link:hover::after {
+  @apply scale-x-100;
+}

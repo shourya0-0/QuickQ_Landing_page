@@ -76,7 +76,7 @@ export default function QuickQCarousel() {
   }
 
   return (
-    <div className="mx-auto px-6 py-20 min-h-screen" style={{ backgroundColor: "#f6efe7" }}>
+    <div className="mx-auto px-6 py-20 min-h-screen" style={{ backgroundColor: "#ffffff" }}>
       {/* Header */}
       <div className="text-center mb-20">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">

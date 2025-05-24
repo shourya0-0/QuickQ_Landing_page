@@ -76,7 +76,7 @@ export default function FeaturesSection() {
   ]
 
   return (
-    <section className="w-full py-24 transition-colors duration-700" style={{ backgroundColor: "#e8d7c9" }}>
+    <section className="w-full py-24 transition-colors duration-700" style={{ backgroundColor: "#f6efe7" }}>
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 transform transition-all duration-500 hover:scale-[1.01]">
           <p className="text-xl font-medium font-poppins text-[#F97316] uppercase tracking-wide mb-2 transition-all duration-300">

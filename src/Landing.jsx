@@ -5,6 +5,7 @@ import CTASection from "./components/cta-section"
 import Footer from "./components/footer"
 import QuickQCarousel from "./components/about"
 
+
 export default function Home() {
   return (
     <main className="min-h-screen">
@@ -13,6 +14,7 @@ export default function Home() {
         <HeroSection />
         <QuickQCarousel />
         <FeaturesSection />
+
         {/* <CTASection /> */}
       </div>
       <Footer />

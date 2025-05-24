@@ -47,7 +47,7 @@ export default function Footer() {
             <h4 className="text-xl font-medium font-poppins mb-4 text-gray-800">Connect With Us</h4>
             <div className="flex space-x-4">
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/company/thequickq/about/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 text-gray-700 transition-all"
@@ -71,11 +71,11 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail size={18} className="text-orange-500" />
-                <span className="text-gray-600">info@quickq.com</span>
+                <span className="text-gray-600">shourya.gupta.quickq@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone size={18} className="text-orange-500" />
-                <span className="text-gray-600">+1 (555) 123-4567</span>
+                <span className="text-gray-600">+91 8770453255</span>
               </div>
             </div>
           </div>

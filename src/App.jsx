@@ -4,6 +4,7 @@ import Landing from './Landing'
 import ContactPage from './ContactPage'
 import FAQPage from './FAQPage'
 import PricingPage from './PricingPage'
+import SignupPage from './SignupPage'
 import './index.css'
 
 function App() {
@@ -14,8 +15,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/faq" element={<FAQPage />} />
-        {/* Add more routes as needed */}
-        <Route path="/signup" element={<Landing />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
 
   )

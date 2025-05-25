@@ -5,6 +5,7 @@ import ContactPage from './ContactPage'
 import FAQPage from './FAQPage'
 import PricingPage from './PricingPage'
 import SignupPage from './SignupPage'
+import Error404Page from './Error404Page'
 import './index.css'
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/faq" element={<FAQPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      {/* Catch-all route for 404 errors */}
+      <Route path="*" element={<Error404Page />} />
     </Routes>
   )
 }

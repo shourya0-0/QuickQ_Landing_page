@@ -75,11 +75,11 @@ export default function PricingPage() {
             </div>
             
             {/* Popular badge */}
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            {/* <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <div className="bg-[#F97316] text-white px-6 py-2 rounded-full font-semibold text-sm">
                 🔥 UNBELIEVABLY POPULAR 🔥
               </div>
-            </div>
+            </div> */}
             
             <div className={`p-8 md:p-12 text-center transition-all duration-1000 delay-1400 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'

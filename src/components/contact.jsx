@@ -5,24 +5,92 @@ export default function ContactForm() {
     name: "",
     email: "",
     phone: "",
-    source: "",
+    message: "",
   })
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null) // 'success', 'error', or null
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSourceChange = (value) => {
-    setFormData((prev) => ({ ...prev, source: value }))
-    setIsDropdownOpen(false)
-  }
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Add your form submission logic here
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      // Create FormData for Web3Forms
+      const formDataToSend = new FormData()
+      
+      // Web3Forms requires an access key (free service)
+      formDataToSend.append('access_key', '889e403f-4500-420b-b247-a1fe3c510cd5') // Get free key from web3forms.com
+      formDataToSend.append('name', formData.name)
+      formDataToSend.append('email', formData.email)
+      formDataToSend.append('phone', formData.phone || 'Not provided')
+      formDataToSend.append('subject', `QuickQ Contact Form Submission from ${formData.name}`)
+      
+      // Format the message beautifully
+      const formattedMessage = `Hello QuickQ Team,
+
+I am interested in learning more about QuickQ and would like to get in touch.
+
+📋 CONTACT DETAILS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 Name: ${formData.name}
+📧 Email: ${formData.email}
+📱 Phone: ${formData.phone || 'Not provided'}
+
+💬 MESSAGE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${formData.message}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📍 Form Details:
+• Sent from: QuickQ Landing Page
+• Website: ${window.location.origin}
+• Submission Time: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
+• User Agent: ${navigator.userAgent.substring(0, 50)}...
+
+This is an automated message from the QuickQ contact form.
+
+Best regards,
+${formData.name}`
+      
+      formDataToSend.append('message', formattedMessage)
+      
+      // Additional fields for better email formatting
+      formDataToSend.append('redirect', window.location.href)
+      formDataToSend.append('_template', 'table') // Use table template for better formatting
+
+      // Send to Web3Forms
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitStatus('success')
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        })
+      } else {
+        throw new Error(result.message || 'Form submission failed')
+      }
+    } catch (error) {
+      console.error('Form submission failed:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -91,67 +159,49 @@ export default function ContactForm() {
                 />
               </div>
 
-              <div className="relative">
-                <button
-                  type="button"
-                  className="w-full px-6 py-4 text-left border-2 border-gray-200 rounded-xl bg-white flex justify-between items-center focus:outline-none focus:ring-2 focus:border-transparent text-lg transition-all duration-200"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              <div>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Your Message *"
+                  required
+                  rows={5}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:border-transparent text-lg bg-white transition-all duration-200 resize-none"
                   onFocus={(e) => e.target.style.borderColor = "#F97316"}
                   onBlur={(e) => e.target.style.borderColor = "#d1d5db"}
-                >
-                  <span className={formData.source ? "text-gray-900" : "text-gray-500"}>
-                    {formData.source || "How did you find us?"}
-                  </span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`h-6 w-6 text-gray-400 transition-transform duration-200 ${
-                      isDropdownOpen ? "transform rotate-180" : ""
-                    }`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {isDropdownOpen && (
-                  <div className="absolute z-10 w-full mt-2 border border-gray-200 rounded-xl shadow-xl bg-white">
-                    <ul className="py-2">
-                      {[
-                        "Search Engine (Google, Bing, etc.)",
-                        "Social Media",
-                        "Friend/Colleague Referral",
-                        "Online Advertisement",
-                        "Industry Event/Conference",
-                        "Other"
-                      ].map((option) => (
-                        <li
-                          key={option}
-                          className="px-6 py-3 hover:bg-orange-50 cursor-pointer text-gray-700 hover:text-gray-900 transition-colors duration-150"
-                          onClick={() => handleSourceChange(option)}
-                          style={{ ':hover': { backgroundColor: "#F97316", opacity: 0.1 } }}
-                        >
-                          {option}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                />
               </div>
 
               <button
                 type="submit"
-                className="w-full text-white py-4 rounded-xl transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                disabled={isSubmitting}
+                className={`w-full text-white py-4 rounded-xl transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 ${
+                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
                 style={{ 
-                  backgroundColor: "#F97316",
-                  ':hover': { backgroundColor: "#e06010" }
+                  backgroundColor: isSubmitting ? "#d1d5db" : "#F97316",
+                  ':hover': { backgroundColor: isSubmitting ? "#d1d5db" : "#e06010" }
                 }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = "#e06010"}
-                onMouseLeave={(e) => e.target.style.backgroundColor = "#F97316"}
+                onMouseEnter={(e) => !isSubmitting && (e.target.style.backgroundColor = "#e06010")}
+                onMouseLeave={(e) => !isSubmitting && (e.target.style.backgroundColor = "#F97316")}
               >
-                SEND MESSAGE
+                {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
               </button>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl">
+                  ✅ Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl">
+                  ❌ Failed to send message. Please try again or contact us directly.
+                </div>
+              )}
             </form>
 
             {/* Contact Information */}
@@ -176,7 +226,7 @@ export default function ContactForm() {
                 <div>
                   <div className="text-sm font-bold uppercase tracking-wide text-gray-600">PHONE</div>
                   <div className="text-lg font-semibold" style={{ color: "#F97316" }}>
-                    +1 (555) 123-4567
+                    +91 8770453255
                   </div>
                 </div>
               </div>
@@ -202,11 +252,11 @@ export default function ContactForm() {
                 <div>
                   <div className="text-sm font-bold uppercase tracking-wide text-gray-600">EMAIL</div>
                   <a 
-                    href="mailto:contact@quickq.com" 
+                    href="mailto:shourya.gupta.quickq@gmail.com" 
                     className="text-lg font-semibold hover:underline transition-colors duration-200"
                     style={{ color: "#F97316" }}
                   >
-                    contact@quickq.com
+                    Email Us
                   </a>
                 </div>
               </div>
@@ -232,7 +282,7 @@ export default function ContactForm() {
                 <div>
                   <div className="text-sm font-bold uppercase tracking-wide text-gray-600">OFFICE</div>
                   <div className="text-lg font-semibold text-gray-700">
-                    San Francisco, CA
+                    LNMIIT, Jaipur, India
                   </div>
                 </div>
               </div>
@@ -242,14 +292,14 @@ export default function ContactForm() {
           {/* Right Side - Map */}
           <div className="h-full min-h-[500px] md:min-h-[700px] rounded-2xl overflow-hidden shadow-xl border-4" style={{ borderColor: "#F97316" }}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.019284165487!2d-122.41941988468171!3d37.77492927975852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085808dc07d6c45%3A0x70e4cf3e23b67b01!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1703123456789!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d34034.237063522094!2d75.92614264732131!3d26.911387193268766!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396dba21e8a1d1c9%3A0x5ab565cce4d44c2b!2sThe%20LNM%20Institute%20of%20Information%20Technology!5e0!3m2!1sen!2sin!4v1748197550690!5m2!1sen!2sin"
               width="100%"
               height="100%"
               style={{ border: 0 }}
               allowFullScreen={false}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="QuickQ Office Location"
+              title="QuickQ Office Location - LNMIIT Jaipur"
               className="w-full h-full"
             ></iframe>
           </div>

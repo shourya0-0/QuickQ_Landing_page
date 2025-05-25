@@ -14,8 +14,7 @@ export default function Home() {
         <HeroSection />
         <QuickQCarousel />
         <FeaturesSection />
-
-        {/* <CTASection /> */}
+        <CTASection />
       </div>
       <Footer />
     </main>

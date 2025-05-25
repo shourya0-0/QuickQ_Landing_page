@@ -37,25 +37,25 @@ export default function Navbar() {
           {/* Logo */}
           <Link 
             to="/" 
-            className="text-[#F97316] text-3xl md:text-[48px] font-medium font-afacad transition-transform duration-300 hover:scale-105 flex-shrink-0 z-50"
+            className="text-[#F97316] text-3xl md:text-[48px] font-medium font-afacad transition-all duration-300 flex-shrink-0 z-50"
           >
             QuickQ
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex py-4 md:py-[8px] px-4 md:px-[10px] items-center gap-3 md:gap-[40px] rounded-[100px] bg-white shadow-[0px_4px_30px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:shadow-[0px_8px_40px_0px_rgba(0,0,0,0.2)]">
+          <nav className="hidden md:flex py-4 md:py-[8px] px-4 md:px-[10px] items-center gap-3 md:gap-[40px] rounded-[100px] bg-white shadow-[0px_4px_30px_0px_rgba(0,0,0,0.25)] transition-all duration-300">
             {[
               { path: '/', label: 'Home' },
               { path: '/contact', label: 'Contact Us' },
-              { path: '/features', label: 'Features' },
-              { path: '/pricing', label: 'Pricing' }
+              { path: '/pricing', label: 'Pricing' },
+              { path: '/faq', label: 'FAQ' }
             ].map((item) => (
               <Link 
                 key={item.path}
                 to={item.path} 
                 className={`font-poppins px-6 py-2 rounded-[100px] transition-all duration-300 ease-in-out relative whitespace-nowrap
                   ${pathname === item.path 
-                    ? 'text-gray-800 font-medium bg-[#EAEAEA] scale-105 px-10 py-2' 
+                    ? 'text-gray-800 font-medium bg-[#EAEAEA] px-10 py-2' 
                     : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
                   }`}
               >
@@ -67,7 +67,7 @@ export default function Navbar() {
           {/* Try for Free Button - Hidden on Mobile */}
           <Link 
             to="/signup" 
-            className="hidden md:flex border border-[#F97316] text-[#F97316] rounded-[11px] px-5 py-2 font-medium font-poppins transition-all duration-300 hover:bg-[#F97316] hover:text-white hover:shadow-md transform hover:scale-105 active:scale-95 text-center w-[180px] items-center justify-center whitespace-nowrap flex-shrink-0"
+            className="hidden md:flex border border-[#F97316] text-[#F97316] rounded-[11px] px-5 py-2 font-medium font-poppins transition-all duration-300 hover:bg-[#F97316] hover:text-white hover:shadow-md text-center w-[180px] items-center justify-center whitespace-nowrap flex-shrink-0"
           >
             Try for Free
           </Link>
@@ -92,8 +92,8 @@ export default function Navbar() {
                 {[
                   { path: '/', label: 'Home' },
                   { path: '/contact', label: 'Contact Us' },
-                  { path: '/features', label: 'Features' },
-                  { path: '/pricing', label: 'Pricing' }
+                  { path: '/pricing', label: 'Pricing' },
+                  { path: '/faq', label: 'FAQ' }
                 ].map((item) => (
                   <Link 
                     key={item.path}

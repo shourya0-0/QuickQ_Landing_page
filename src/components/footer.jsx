@@ -1,14 +1,40 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Linkedin, Twitter, Mail, Phone } from 'lucide-react'
 
 export default function Footer() {
+  const [isVisible, setIsVisible] = useState(false)
+  const footerRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <footer className="w-full py-12 bg-white text-gray-800 border-t border-gray-100">
+    <footer ref={footerRef} className={`w-full py-12 bg-white text-gray-800 border-t border-gray-100 transition-all duration-1000 ${
+      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+    }`}>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 transition-all duration-1000 delay-200 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+        }`}>
           {/* Logo & About */}
-          <div className="col-span-1">
+          <div className={`col-span-1 transition-all duration-1000 delay-300 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             <h3 className="text-2xl font-bold font-poppins mb-4 text-orange-600">QuickQ</h3>
             <p className="text-gray-600 text-sm">
               The comprehensive queue management solution for businesses and customers.
@@ -16,7 +42,9 @@ export default function Footer() {
           </div>
           
           {/* Quick Links */}
-          <div className="col-span-1">
+          <div className={`col-span-1 transition-all duration-1000 delay-400 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             <h4 className="text-xl font-medium font-poppins mb-4 text-gray-800">Quick Links</h4>
             <ul className="space-y-2">
               <li>
@@ -43,7 +71,9 @@ export default function Footer() {
           </div>
           
           {/* Social Media */}
-          <div className="col-span-1">
+          <div className={`col-span-1 transition-all duration-1000 delay-500 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             <h4 className="text-xl font-medium font-poppins mb-4 text-gray-800">Connect With Us</h4>
             <div className="flex space-x-4">
               <a 
@@ -66,7 +96,9 @@ export default function Footer() {
           </div>
           
           {/* Contact Info */}
-          <div className="col-span-1">
+          <div className={`col-span-1 transition-all duration-1000 delay-600 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             <h4 className="text-xl font-medium font-poppins mb-4 text-gray-800">Contact Info</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
@@ -81,7 +113,9 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-gray-200 mt-10 pt-6 text-center text-gray-500 text-sm">
+        <div className={`border-t border-gray-200 mt-10 pt-6 text-center text-gray-500 text-sm transition-all duration-1000 delay-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}>
           <p>© {new Date().getFullYear()} QuickQ. All rights reserved.</p>
         </div>
       </div>

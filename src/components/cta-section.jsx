@@ -1,145 +1,161 @@
-import React, { useState } from 'react';
-import { Download, Building2, ArrowRight, Sparkles, Users, Clock } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, CheckCircle, Users, Clock, Bell } from 'lucide-react'
 
-const CTASection = () => {
-  const [hoveredButton, setHoveredButton] = useState(null);
+export default function CTASection() {
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef(null)
 
-  const FloatingElement = ({ children, delay = 0, className = "" }) => (
-    <div 
-      className={`animate-bounce ${className}`} 
-      style={{ animationDelay: `${delay}s` }}
-    >
-      {children}
-    </div>
-  );
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const benefits = [
+    {
+      icon: <Users className="w-5 h-5" />,
+      text: "Join 10,000+ people who've escaped queue purgatory"
+    },
+    {
+      icon: <Clock className="w-5 h-5" />,
+      text: "Reclaim 15+ minutes per visit (that's a coffee break!)"
+    },
+    {
+      icon: <Bell className="w-5 h-5" />,
+      text: "Smart notifications (we're basically your personal queue butler)"
+    }
+  ]
 
   return (
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "#e8d7c9" }}>
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-[#4A2828]/5"></div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#F97316]/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#4A2828]/10 rounded-full blur-3xl animate-pulse delay-700"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-[600px] h-[600px] bg-[#4A2828]/5 rounded-full blur-3xl"></div>
-        </div>
+    <section 
+      ref={sectionRef}
+      className={`relative w-full py-16 md:py-20 overflow-hidden transition-all duration-1000 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+      style={{ backgroundColor: "#f8fafc" }}
+    >
+      {/* Simplified Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-20 w-24 h-24 rounded-full bg-gradient-to-br from-orange-400 to-orange-600"></div>
+        <div className="absolute bottom-20 right-20 w-32 h-32 rounded-full bg-gradient-to-br from-orange-500 to-orange-700"></div>
+        <div className="absolute top-1/2 left-10 w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600"></div>
       </div>
 
-      {/* Floating Elements */}
-      <FloatingElement delay={0} className="absolute top-20 left-20">
-        <div className="w-16 h-16 bg-[#4A2828] rounded-2xl opacity-10 rotate-12"></div>
-      </FloatingElement>
-      <FloatingElement delay={1} className="absolute top-32 right-32">
-        <div className="w-12 h-12 bg-[#F97316] rounded-full opacity-10"></div>
-      </FloatingElement>
-      <FloatingElement delay={0.5} className="absolute bottom-32 left-32">
-        <div className="w-20 h-20 bg-[#4A2828] rounded-3xl opacity-10 rotate-45"></div>
-      </FloatingElement>
+      <div className="relative z-10 container mx-auto px-4 max-w-4xl">
+        <div className="w-full">
+          {/* Main CTA Card */}
+          <div className={`bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-1000 delay-200 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}>
+            
+            {/* Orange Header Bar */}
+            <div className="h-4 bg-gradient-to-r from-orange-500 to-orange-600" style={{ backgroundColor: "#F97316" }}></div>
+            
+            <div className="p-8 md:p-12 lg:p-16 text-center">
+              {/* Content Container */}
+              <div className="max-w-2xl mx-auto space-y-8">
+                
+                {/* Main Heading */}
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-[1.15] font-poppins tracking-tight">
+                  Ready to Ditch
+                  <br className="hidden sm:block" />
+                  <span style={{ color: "#F97316" }}>the Wait?</span>
+                </h2>
+                
+                <p className="text-lg md:text-xl text-gray-600 font-poppins leading-relaxed max-w-xl mx-auto">
+                  Join the rebellion against unnecessary waiting! Thousands have already made the switch from "standing around looking confused" to "living their best life." 🚀
+                </p>
 
-      <div className="relative max-w-6xl mx-auto px-6 text-center">
-        {/* Header */}
-        <div className="mb-12">
-          <div className="inline-flex items-center px-6 py-3 bg-[#4A2828]/10 backdrop-blur-sm rounded-full border border-[#4A2828]/20 mb-8">
-            <Sparkles className="w-5 h-5 text-[#F97316] mr-2 animate-pulse" />
-            <span className="text-[#4A2828] font-medium font-['Inter']">Ready to Transform Your Experience?</span>
-          </div>
-          
-          <h2 className="text-6xl font-bold text-[#4A2828] mb-6 font-['Poppins'] leading-tight uppercase">
-            Ready to Queue 
-            <span className="bg-gradient-to-r from-[#F97316] to-[#F97316] bg-clip-text text-transparent"> Smarter</span>?
-          </h2>
-          
-          <p className="text-xl text-[#4A2828]/80 max-w-3xl mx-auto leading-relaxed font-['Inter']">
-            Join thousands of users who have already saved millions of hours. Transform your queuing experience today.
-          </p>
-        </div>
+                {/* Benefits List */}
+                <div className="space-y-4">
+                  {benefits.map((benefit, index) => (
+                    <div 
+                      key={index}
+                      className={`flex items-center justify-center gap-4 transition-all duration-700 ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                      }`}
+                      style={{ transitionDelay: `${400 + index * 150}ms` }}
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white shadow-lg" style={{ backgroundColor: "#F97316" }}>
+                        {benefit.icon}
+                      </div>
+                      <span className="text-base text-gray-700 font-medium font-poppins">{benefit.text}</span>
+                    </div>
+                  ))}
+                </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {[
-            { icon: <Users className="w-8 h-8" />, number: "500K+", label: "Active Users", color: "bg-[#4A2828]" },
-            { icon: <Building2 className="w-8 h-8" />, number: "2K+", label: "Service Providers", color: "bg-[#4A2828]" },
-            { icon: <Clock className="w-8 h-8" />, number: "2M+", label: "Hours Saved", color: "bg-[#4A2828]" }
-          ].map((stat, index) => (
-            <div 
-              key={index}
-              className="p-6 bg-[#4A2828] backdrop-blur-lg rounded-2xl border border-[#4A2828]/20 hover:bg-[#5A3838] transition-all duration-300 transform hover:scale-105 hover:-translate-y-2"
-            >
-              <div className="inline-flex p-3 rounded-xl bg-white/10 mb-4">
-                <div className="text-[#F97316]">
-                  {stat.icon}
+                {/* CTA Buttons */}
+                <div className={`flex flex-col sm:flex-row justify-center gap-4 transition-all duration-1000 delay-600 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}>
+                  <Link
+                    to="/signup"
+                    className="inline-flex items-center justify-center gap-3 px-8 py-4 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg group font-poppins"
+                    style={{ backgroundColor: "#F97316" }}
+                    onMouseEnter={(e) => e.target.style.backgroundColor = "#e86a1c"}
+                    onMouseLeave={(e) => e.target.style.backgroundColor = "#F97316"}
+                  >
+                    Start Your Queue Revolution
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                  
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-gray-900 font-semibold rounded-xl border-2 border-gray-200 transition-all duration-300 hover:border-orange-300 hover:bg-orange-50 hover:shadow-lg font-poppins"
+                  >
+                    Let's Chat (We're Friendly!)
+                  </Link>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500 transition-all duration-1000 delay-800 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="font-poppins font-medium">Free forever (seriously)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="font-poppins font-medium">No credit card, no strings attached</span>
+                  </div>
                 </div>
               </div>
-              <div className="text-3xl font-bold text-white mb-2 font-['Poppins']">
-                {stat.number}
+            </div>
+          </div>
+
+          {/* Bottom Stats */}
+          {/* <div className={`mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 delay-1000 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+          }`}>
+            {[
+              { number: "10K+", label: "Active Users" },
+              { number: "500+", label: "Partner Businesses" },
+              { number: "95%", label: "Customer Satisfaction" },
+              { number: "15min", label: "Average Time Saved" }
+            ].map((stat, index) => (
+              <div key={index} className="text-center group">
+                <div className="text-2xl md:text-3xl font-bold text-gray-900 font-poppins transition-colors duration-300 group-hover:text-orange-500" style={{ color: "#F97316" }}>
+                  {stat.number}
+                </div>
+                <div className="text-sm text-gray-600 font-poppins mt-1">{stat.label}</div>
               </div>
-              <div className="text-white/80 font-['Inter']">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-          {/* Download App Button */}
-          <button
-            className="group relative overflow-hidden px-8 py-4 bg-[#4A2828] text-white rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#4A2828]/25 font-['Inter']"
-            onMouseEnter={() => setHoveredButton('download')}
-            onMouseLeave={() => setHoveredButton(null)}
-          >
-            <div className="relative z-10 flex items-center">
-              <Download className={`w-6 h-6 mr-3 transition-transform duration-300 ${hoveredButton === 'download' ? 'animate-bounce' : ''}`} />
-              Download the App
-              <ArrowRight className={`w-5 h-5 ml-3 transition-transform duration-300 ${hoveredButton === 'download' ? 'translate-x-2' : ''}`} />
-            </div>
-            <div className="absolute inset-0 bg-[#5A3838] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="absolute -top-2 -right-2 w-4 h-4 bg-[#F97316]/30 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
-          </button>
-
-          {/* Become Provider Button */}
-          <button
-            className="group relative overflow-hidden px-8 py-4 bg-transparent border-2 border-[#4A2828] text-[#4A2828] rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-[#4A2828]/10 hover:border-[#4A2828] backdrop-blur-sm font-['Inter']"
-            onMouseEnter={() => setHoveredButton('provider')}
-            onMouseLeave={() => setHoveredButton(null)}
-          >
-            <div className="relative z-10 flex items-center">
-              <Building2 className={`w-6 h-6 mr-3 transition-transform duration-300 ${hoveredButton === 'provider' ? 'animate-bounce' : ''}`} />
-              Become a Provider
-              <ArrowRight className={`w-5 h-5 ml-3 transition-transform duration-300 ${hoveredButton === 'provider' ? 'translate-x-2' : ''}`} />
-            </div>
-            <div className="absolute inset-0 bg-[#4A2828]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
-        </div>
-
-        {/* Trust Indicators */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-[#4A2828] font-['Inter'] font-medium">
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-[#F97316] rounded-full mr-2 animate-pulse"></div>
-            <span>100% Free to Download</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-[#F97316] rounded-full mr-2 animate-pulse"></div>
-            <span>Available on iOS & Android</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-2 h-2 bg-[#F97316] rounded-full mr-2 animate-pulse"></div>
-            <span>Instant Setup</span>
-          </div>
-        </div>
-
-        {/* Bottom Decoration */}
-        <div className="mt-16 relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#4A2828]/20 to-transparent h-px"></div>
-          <div className="flex items-center justify-center">
-            <div className="w-16 h-16 bg-[#4A2828] rounded-2xl flex items-center justify-center transform rotate-12 opacity-20">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
-          </div>
+            ))}
+          </div> */}
         </div>
       </div>
     </section>
-  );
-};
-
-export default CTASection;
+  )
+}
